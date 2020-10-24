@@ -3,6 +3,11 @@ import boto3
 import os
 from botocore.vendored import requests
 
+TABLE_NAME='yelp-restaurants'
+SAMPLE_N='5'
+SEARCH_URL='https://search-chat-concierge-cloud-anq6myrjo7reh4vgcawtoq3v6u.us-east-1.es.amazonaws.com'
+
+
 def send_sms(number, message):
     sns = boto3.client(
         'sns',
@@ -35,10 +40,11 @@ def search(cuisine):
     requestBody['size'] = SAMPLE_N
     requestBody['query'] = {}
     requestBody['query']['match_phrase'] = {}
-    requestBody['query']['match_phrase']['categories.title'] = cuisine
+    requestBody['query']['match_phrase']['cuisine.title'] = cuisine
     headers = {'Content-type': 'application/json'}
     r = requests.get(url=SEARCH_URL, data=json.dumps(requestBody), headers=headers)
     data = r.json()
+    print('##############', data)
     return data['hits']['hits']
 
 
@@ -58,13 +64,25 @@ def get_restaurant_data(ids):
     ans = ''
     for i in range(0, len(res_data)):
         ans += "{}. {}, located at {}\n".format(i + 1, res_data[i]['name'],
-                                                ' '.join(res_data[i]['location']['display_address']))
+                                                ' '.join(res_data[i]['address']))
     return ans
 
 
 
 def lambda_handler(event, context):
     print(event)
-    cuisine = event.Records[0].
-    search(event.messageAt)
+    slotDetails = event['Records'][0]['messageAttributes'];
+    slots = {
+        'Cuisine': slotDetails['Cuisine']['stringValue'],
+        'Phone': slotDetails['Phone']['stringValue'],
+        'Time': slotDetails['Time']['stringValue'],
+        'Location': slotDetails['Location']['stringValue'],
+        'Number': slotDetails['Number']['stringValue']
+    }
+    print(slots)
+    ids = search(slots['Cuisine'])
+    print(ids)
+    message = get_restaurant_data(ids)
+    print(message)
+    send_sms(number, message)
     return {}

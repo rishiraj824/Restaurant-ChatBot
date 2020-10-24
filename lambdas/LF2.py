@@ -32,7 +32,7 @@ def send_sms(number, message):
         MessageAttributes=smsattrs
     )
 
-    print(response)
+
 
 
 def search(cuisine):
@@ -44,7 +44,7 @@ def search(cuisine):
     headers = {'Content-type': 'application/json'}
     r = requests.get(url=SEARCH_URL, data=json.dumps(requestBody), headers=headers)
     data = r.json()
-    print('##############', data)
+
     return data['hits']['hits']
 
 
@@ -59,7 +59,7 @@ def get_restaurant_data(ids):
         RequestItems=payload
     )
     
-    print('--------------------', response)
+  
     res_data = response['Responses'][TABLE_NAME]
     ans = ''
     for i in range(0, len(res_data)):
@@ -70,7 +70,7 @@ def get_restaurant_data(ids):
 
 
 def lambda_handler(event, context):
-    print(event)
+   
     slotDetails = event['Records'][0]['messageAttributes'];
     slots = {
         'Cuisine': slotDetails['Cuisine']['stringValue'],
@@ -79,10 +79,10 @@ def lambda_handler(event, context):
         'Location': slotDetails['Location']['stringValue'],
         'Number': slotDetails['Number']['stringValue']
     }
-    print(slots)
+  
     ids = search(slots['Cuisine'])
-    print(ids)
+    
     message = get_restaurant_data(ids)
-    print(message)
+  
     send_sms(number, message)
     return {}

@@ -9,7 +9,7 @@ TABLE_NAME = 'yelp-db'
 SAMPLE_N = '5'
 SEARCH_URL = 'https://search-chat-concierge-cloud-nyu-2xycurqltvlkdpsdtsbhu5uouy.us-east-1.es.amazonaws.com'
 
-awsauth = AWS4Auth("AKIAI4IGJLYTEIMMEBEA", "mGsjWK3hXD5WNilFe8z0sBBqKvHV+UYel7WsV3BW", 'us-east-1', 'es',
+awsauth = AWS4Auth("", "", 'us-east-1', 'es',
                    os.getenv('AWS_SESSION_TOKEN'))
 
 es = Elasticsearch(SEARCH_URL, http_auth=awsauth, connection_class=RequestsHttpConnection)

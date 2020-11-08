@@ -15,7 +15,7 @@ categories = ["japanese", "chinese", "indian", "african", "american"]
 businesses_format = []
 
 HEADERS = {
-    'Authorization': 'Bearer UKZ_LEnLwGA-LzpGApvSRmhLT4raUykkdTPUUE4pGZRUnQZfpmmrp_y7eagg0w6L8f6UYUlh_kQuAbvzvZtYzqeBaasGybuw8XI8fB3B3Eszom4lSZoMTrlFvEWCX3Yx'
+    'Authorization': 'Bearer <Token>'
 }
 
 

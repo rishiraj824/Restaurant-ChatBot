@@ -1,6 +1,6 @@
 # Restaurant Recommendation Microservice
 
-Restaurant Recommendation Bot microservice uses scraped restaurants from Yelp for particular cuisine types to build a database of top restaurants in a given location. The search uses Elastic Search based on cuisine type. The suggestions are sent to the user's phone number via SMS which uses SNS and SQS for gauranteed delivery. 
+Restaurant Recommendation Bot microservice uses scraped restaurants from Yelp for particular cuisine types to build a database of top restaurants in a given location. The search uses Elastic Search find such restaurants based on the entered cuisine type. The suggestions are sent to the user's phone number via SMS which uses SNS and SQS for gauranteed delivery. 
 
 ### Architecture Diagram 
 
